@@ -1,6 +1,4 @@
 language: objective-c
-before_script:
-    - brew update && brew upgrade xctool
 xcode_project: EventBox.xcodeproj
 xcode_scheme: EventBoxTests
 xcode_sdk: iphonesimulator
