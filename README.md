@@ -17,11 +17,15 @@ EventBox is yet another notification library written in Swift.
 
 Create a Cartfile that lists the frameworks you’d like to use in your project.
 
-    $ echo 'github "s-aska/EventBox"' >> Cartfile
+```bash
+echo 'github "s-aska/EventBox"' >> Cartfile
+```
 
 Run `carthage update`
 
-    $ carthage update
+```bash
+carthage update
+```
 
 On your application targets’ “General” settings tab, in the “Embedded Binaries” section, drag and drop each framework you want to use from the Carthage.build folder on disk.
 
