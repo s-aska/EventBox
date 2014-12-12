@@ -1,6 +1,6 @@
 # EventBox [![Build Status](https://travis-ci.org/s-aska/EventBox.svg)](https://travis-ci.org/s-aska/EventBox)
 
-EventBox is yet another notification library written in Swift.
+Provides an interface for use the `addObserverForName` safely and easily.
 
 ## Features
 
