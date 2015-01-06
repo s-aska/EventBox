@@ -49,6 +49,17 @@ EventBox.off(target) // Remove all the observers of the target
 EventBox.off(target, "reload") // Remove observers of the same name of the target
 ```
 
+### Sender
+
+```swift
+EventBox.onMainThread(target, name:"getStatus") { n in
+    // API Access
+    let status = n.object as TwitterStatus // sender
+}
+
+let status = TwitterStatus()
+EventBox.post("getStatus", sender: status)
+```
 
 ### Handling the keyboard notifications
 
