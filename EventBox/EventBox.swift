@@ -27,7 +27,7 @@ public class EventBox {
     // MARK: - addObserverForName
     
     public class func on(target: AnyObject, name: String, sender: AnyObject?, queue: NSOperationQueue?, handler: ((NSNotification!) -> Void)) -> NSObjectProtocol {
-        let id = ObjectIdentifier(target).uintValue()
+        let id = ObjectIdentifier(target).uintValue
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(name, object: sender, queue: queue, usingBlock: handler)
         let namedObserver = NamedObserver(observer: observer, name: name)
         
@@ -61,7 +61,7 @@ public class EventBox {
     // MARK: - removeObserver
     
     public class func off(target: AnyObject) {
-        let id = ObjectIdentifier(target).uintValue()
+        let id = ObjectIdentifier(target).uintValue
         let center = NSNotificationCenter.defaultCenter()
         
         dispatch_sync(Static.queue) {
@@ -74,7 +74,7 @@ public class EventBox {
     }
     
     public class func off(target: AnyObject, name: String) {
-        let id = ObjectIdentifier(target).uintValue()
+        let id = ObjectIdentifier(target).uintValue
         let center = NSNotificationCenter.defaultCenter()
         
         dispatch_sync(Static.queue) {

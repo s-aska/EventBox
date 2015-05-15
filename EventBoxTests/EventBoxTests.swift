@@ -36,7 +36,7 @@ class EventBoxTests: XCTestCase {
         var sendersAll: [AnyObject?] = []
         
         EventBox.onMainThread(self, name: "onMainThreadWithSender", sender: senderA) { (notification: NSNotification!) in
-            sendersA.append(notification.object as Int)
+            sendersA.append(notification.object as! Int)
             return
         }
         
@@ -70,7 +70,7 @@ class EventBoxTests: XCTestCase {
         var sendersAll: [AnyObject?] = []
         
         EventBox.onMainThread(self, name: "onBackgroundThreadWithSender", sender: senderA) { (notification: NSNotification!) in
-            sendersA.append(notification.object as Int)
+            sendersA.append(notification.object as! Int)
             return
         }
         
