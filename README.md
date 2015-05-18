@@ -1,4 +1,4 @@
-# EventBox [![Build Status](https://travis-ci.org/s-aska/EventBox.svg)](https://travis-ci.org/s-aska/EventBox)
+# EventBox [![Circle CI](https://circleci.com/gh/s-aska/EventBox.svg?style=svg)](https://circleci.com/gh/s-aska/EventBox)
 
 Provides an interface for use the `addObserverForName` safely and easily.
 
@@ -11,7 +11,7 @@ Provides an interface for use the `addObserverForName` safely and easily.
 ## Requirements
 
 - iOS 8+
-- Xcode 6.1
+- Xcode 6.3
 
 ## Installation
 
