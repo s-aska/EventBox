@@ -1,0 +1,6 @@
+machine:
+  xcode:
+    version: "6.3.1"
+test:
+  override:
+    - xctool -project EventBox.xcodeproj -scheme EventBoxTests -sdk iphonesimulator -configuration Release build test
