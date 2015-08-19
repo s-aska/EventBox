@@ -1,4 +1,4 @@
-# EventBox [![Circle CI](https://circleci.com/gh/s-aska/EventBox.svg?style=svg)](https://circleci.com/gh/s-aska/EventBox)
+# EventBox [![Build Status](https://www.bitrise.io/app/761888ec89ddf48a.svg?token=0bbaMz2vELeV3rreYasSUw&branch=master)](https://www.bitrise.io/app/761888ec89ddf48a) [![](http://img.shields.io/badge/iOS-8.0%2B-brightgreen.svg?style=flat)]()
 
 Provides an interface for use the `addObserverForName` safely and easily.
 
