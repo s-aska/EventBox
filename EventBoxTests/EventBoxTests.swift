@@ -48,7 +48,6 @@ class EventBoxTests: XCTestCase {
         EventBox.post("onMainThreadWithSender", sender: senderB)
         EventBox.post("onMainThreadWithSender")
         
-        println(sendersA)
         XCTAssertEqual(sendersA.count, 1)
         XCTAssertEqual(sendersA.first!, senderA)
         
