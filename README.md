@@ -11,7 +11,7 @@ Provides an interface for use the `addObserverForName` safely and easily.
 ## Requirements
 
 - iOS 8+
-- Xcode 6.3
+- Xcode 7.0+
 
 ## Installation
 
