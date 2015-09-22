@@ -1,4 +1,8 @@
-# EventBox [![Build Status](https://www.bitrise.io/app/761888ec89ddf48a.svg?token=0bbaMz2vELeV3rreYasSUw&branch=master)](https://www.bitrise.io/app/761888ec89ddf48a) [![](http://img.shields.io/badge/iOS-8.0%2B-brightgreen.svg?style=flat)]()
+# EventBox
+
+[![Build Status](https://www.bitrise.io/app/761888ec89ddf48a.svg?token=0bbaMz2vELeV3rreYasSUw&branch=master)](https://www.bitrise.io/app/761888ec89ddf48a)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![](http://img.shields.io/badge/iOS-8.0%2B-brightgreen.svg?style=flat)]()
 
 Provides an interface for use the `addObserverForName` safely and easily.
 
@@ -8,26 +12,6 @@ Provides an interface for use the `addObserverForName` safely and easily.
 - [x] Carthage support
 - [x] Thread-safe
 
-## Requirements
-
-- iOS 8+
-- Xcode 7.0+
-
-## Installation
-
-Create a Cartfile that lists the frameworks you’d like to use in your project.
-
-```bash
-echo 'github "s-aska/EventBox"' >> Cartfile
-```
-
-Run `carthage update`
-
-```bash
-carthage update
-```
-
-On your application targets’ “General” settings tab, in the “Embedded Binaries” section, drag and drop each framework you want to use from the Carthage.build folder on disk.
 
 ## Usage
 
@@ -111,6 +95,30 @@ func keyboardWillChangeFrame(notification: NSNotification, showsKeyboard: Bool) 
         }
     })
 }
+```
+
+
+## Requirements
+
+- iOS 8.0+
+- Xcode 7.0+
+
+## Installation
+
+#### Carthage
+
+Add the following line to your [Cartfile](https://github.com/carthage/carthage)
+
+```
+github "s-aska/EventBox"
+```
+
+#### CocoaPods
+
+Add the following line to your [Podfile](https://guides.cocoapods.org/)
+
+```
+pod 'EventBox'
 ```
 
 
