@@ -118,6 +118,7 @@ github "s-aska/EventBox"
 Add the following line to your [Podfile](https://guides.cocoapods.org/)
 
 ```
+use_frameworks!
 pod 'EventBox'
 ```
 
