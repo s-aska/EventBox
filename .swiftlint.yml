@@ -1,0 +1,4 @@
+included:
+- EventBox
+disabled_rules:
+- line_length

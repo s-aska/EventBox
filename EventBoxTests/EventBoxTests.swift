@@ -93,7 +93,7 @@ class EventBoxTests: XCTestCase {
         var count = 0
         
         let handler = { (n: NSNotification!) -> Void in
-            count++
+            count += 1
             return
         }
         
@@ -120,7 +120,7 @@ class EventBoxTests: XCTestCase {
         var count = 0
         
         let handler = { (n: NSNotification!) -> Void in
-            count++
+            count += 1
             return
         }
         
