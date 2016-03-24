@@ -102,7 +102,7 @@ func keyboardWillChangeFrame(notification: NSNotification, showsKeyboard: Bool) 
 ## Requirements
 
 - iOS 8.0+
-- Xcode 7.0+
+- Xcode 7.3+
 
 ## Installation
 
