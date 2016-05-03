@@ -1,5 +1,5 @@
 language: objective-c
 xcode_project: EventBox.xcodeproj
-xcode_scheme: EventBoxTests
+xcode_scheme: EventBox
 xcode_sdk: iphonesimulator
 osx_image: xcode7.3
