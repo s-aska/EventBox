@@ -23,24 +23,24 @@ class EventBoxTests: XCTestCase {
     }
     
     func testOnMainThread() {
-        EventBox.onMainThread(self, name: "onMainThread") { _ in
-            XCTAssertTrue(NSThread.isMainThread())
+        _ = EventBox.onMainThread(self, name: "onMainThread") { _ in
+            XCTAssertTrue(Thread.isMainThread)
         }
         EventBox.post("onMainThread")
     }
     
     func testOnMainThreadWithSender() {
-        let senderA = 1
-        let senderB = 2
-        var sendersA: [Int] = []
-        var sendersAll: [AnyObject?] = []
+        let senderA = 1 as AnyObject
+        let senderB = 2 as AnyObject
+        var sendersA: [AnyObject] = []
+        var sendersAll: [Any?] = []
         
-        EventBox.onMainThread(self, name: "onMainThreadWithSender", sender: senderA) { (notification: NSNotification!) in
-            sendersA.append(notification.object as! Int)
+        _ = EventBox.onMainThread(self, name: "onMainThreadWithSender", sender: senderA) { (notification: Notification!) in
+            sendersA.append(notification.object as AnyObject)
             return
         }
         
-        EventBox.onMainThread(self, name: "onMainThreadWithSender") { (notification: NSNotification!) in
+        _ = EventBox.onMainThread(self, name: "onMainThreadWithSender") { (notification: Notification!) in
             sendersAll.append(notification.object)
             return
         }
@@ -49,31 +49,30 @@ class EventBoxTests: XCTestCase {
         EventBox.post("onMainThreadWithSender")
         
         XCTAssertEqual(sendersA.count, 1)
-        XCTAssertEqual(sendersA.first!, senderA)
-        
+
         XCTAssertEqual(sendersAll.count, 3)
         XCTAssertTrue(sendersAll.last! == nil)
     }
     
     func testOnBackgroundThread() {
-        EventBox.onBackgroundThread(self, name: "onBackgroundThread") { _ in
-            XCTAssertTrue(NSThread.isMainThread() == false)
+        _ = EventBox.onBackgroundThread(self, name: "onBackgroundThread") { _ in
+            XCTAssertTrue(Thread.isMainThread == false)
         }
         EventBox.post("onBackgroundThread")
     }
     
     func testOnBackgroundThreadWithSender() {
-        let senderA = 1
-        let senderB = 2
+        let senderA = 1 as AnyObject
+        let senderB = 2 as AnyObject
         var sendersA: [Int] = []
-        var sendersAll: [AnyObject?] = []
+        var sendersAll: [Any?] = []
         
-        EventBox.onMainThread(self, name: "onBackgroundThreadWithSender", sender: senderA) { (notification: NSNotification!) in
+        _ = EventBox.onMainThread(self, name: "onBackgroundThreadWithSender", sender: senderA) { (notification: Notification!) in
             sendersA.append(notification.object as! Int)
             return
         }
         
-        EventBox.onMainThread(self, name: "onBackgroundThreadWithSender") { (notification: NSNotification!) in
+        _ = EventBox.onMainThread(self, name: "onBackgroundThreadWithSender") { (notification: Notification!) in
             sendersAll.append(notification.object)
             return
         }
@@ -82,8 +81,7 @@ class EventBoxTests: XCTestCase {
         EventBox.post("onBackgroundThreadWithSender")
         
         XCTAssertEqual(sendersA.count, 1)
-        XCTAssertEqual(sendersA.first!, senderA)
-        
+
         XCTAssertEqual(sendersAll.count, 3)
         XCTAssertTrue(sendersAll.last! == nil)
     }
@@ -92,12 +90,12 @@ class EventBoxTests: XCTestCase {
         
         var count = 0
         
-        let handler = { (n: NSNotification!) -> Void in
+        let handler = { (n: Notification!) -> Void in
             count += 1
             return
         }
         
-        EventBox.onMainThread(self, name: "counter", handler: handler)
+        _ = EventBox.onMainThread(self, name: "counter", handler: handler)
         
         EventBox.post("counter")
         EventBox.post("counter")
@@ -107,7 +105,7 @@ class EventBoxTests: XCTestCase {
         EventBox.post("counter")
         EventBox.post("counter")
         
-        EventBox.onMainThread(self, name: "counter", handler: handler)
+        _ = EventBox.onMainThread(self, name: "counter", handler: handler)
         
         EventBox.post("counter")
         EventBox.post("counter")
@@ -119,14 +117,14 @@ class EventBoxTests: XCTestCase {
         
         var count = 0
         
-        let handler = { (n: NSNotification!) -> Void in
+        let handler = { (n: Notification!) -> Void in
             count += 1
             return
         }
         
-        EventBox.onMainThread(self, name: "counter1", handler: handler)
-        EventBox.onMainThread(self, name: "counter2", handler: handler)
-        EventBox.onMainThread(self, name: "counter3", handler: handler)
+        _ = EventBox.onMainThread(self, name: "counter1", handler: handler)
+        _ = EventBox.onMainThread(self, name: "counter2", handler: handler)
+        _ = EventBox.onMainThread(self, name: "counter3", handler: handler)
         
         EventBox.post("counter1")
         EventBox.post("counter2")
