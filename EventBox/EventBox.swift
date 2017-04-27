@@ -26,10 +26,10 @@ open class EventBox {
 
     // MARK: - addObserverForName
 
-    open class func on(_ target: AnyObject, name: String, sender: AnyObject?, queue: OperationQueue?, handler: @escaping ((Notification!) -> Void)) -> NSObjectProtocol {
+    open class func on(_ target: AnyObject, name: Notification.Name, sender: AnyObject?, queue: OperationQueue?, handler: @escaping ((Notification!) -> Void)) {
         let id = UInt(bitPattern: ObjectIdentifier(target))
-        let observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: name), object: sender, queue: queue, using: handler)
-        let namedObserver = NamedObserver(observer: observer, name: name)
+        let observer = NotificationCenter.default.addObserver(forName: name, object: sender, queue: queue, using: handler)
+        let namedObserver = NamedObserver(observer: observer, name: name.rawValue)
 
         Static.queue.sync {
             if let namedObservers = Static.instance.cache[id] {
@@ -38,24 +38,22 @@ open class EventBox {
                 Static.instance.cache[id] = [namedObserver]
             }
         }
-
-        return observer
     }
 
-    open class func onMainThread(_ target: AnyObject, name: String, handler: @escaping ((Notification!) -> Void)) -> NSObjectProtocol {
-        return EventBox.on(target, name: name, sender: nil, queue: OperationQueue.main, handler: handler)
+    open class func onMainThread(_ target: AnyObject, name: Notification.Name, handler: @escaping ((Notification!) -> Void)) {
+        EventBox.on(target, name: name, sender: nil, queue: OperationQueue.main, handler: handler)
     }
 
-    open class func onMainThread(_ target: AnyObject, name: String, sender: AnyObject?, handler: @escaping ((Notification!) -> Void)) -> NSObjectProtocol {
-        return EventBox.on(target, name: name, sender: sender, queue: OperationQueue.main, handler: handler)
+    open class func onMainThread(_ target: AnyObject, name: Notification.Name, sender: AnyObject?, handler: @escaping ((Notification!) -> Void)) {
+        EventBox.on(target, name: name, sender: sender, queue: OperationQueue.main, handler: handler)
     }
 
-    open class func onBackgroundThread(_ target: AnyObject, name: String, handler: @escaping ((Notification!) -> Void)) -> NSObjectProtocol {
-        return EventBox.on(target, name: name, sender: nil, queue: OperationQueue(), handler: handler)
+    open class func onBackgroundThread(_ target: AnyObject, name: Notification.Name, handler: @escaping ((Notification!) -> Void)) {
+        EventBox.on(target, name: name, sender: nil, queue: OperationQueue(), handler: handler)
     }
 
-    open class func onBackgroundThread(_ target: AnyObject, name: String, sender: AnyObject?, handler: @escaping ((Notification!) -> Void)) -> NSObjectProtocol {
-        return EventBox.on(target, name: name, sender: sender, queue: OperationQueue(), handler: handler)
+    open class func onBackgroundThread(_ target: AnyObject, name: Notification.Name, sender: AnyObject?, handler: @escaping ((Notification!) -> Void)) {
+        EventBox.on(target, name: name, sender: sender, queue: OperationQueue(), handler: handler)
     }
 
     // MARK: - removeObserver
@@ -73,14 +71,14 @@ open class EventBox {
         }
     }
 
-    open class func off(_ target: AnyObject, name: String) {
+    open class func off(_ target: AnyObject, name: Notification.Name) {
         let id = UInt(bitPattern: ObjectIdentifier(target))
         let center = NotificationCenter.default
 
         Static.queue.sync {
             if let namedObservers = Static.instance.cache[id] {
                 Static.instance.cache[id] = namedObservers.filter({ (namedObserver: NamedObserver) -> Bool in
-                    if namedObserver.name == name {
+                    if namedObserver.name == name.rawValue {
                         center.removeObserver(namedObserver.observer)
                         return false
                     } else {
@@ -93,20 +91,20 @@ open class EventBox {
 
     // MARK: - postNotificationName
 
-    open class func post(_ name: String) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: nil)
+    open class func post(_ name: Notification.Name) {
+        NotificationCenter.default.post(name: name, object: nil)
     }
 
-    open class func post(_ name: String, sender: AnyObject?) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: sender)
+    open class func post(_ name: Notification.Name, sender: AnyObject?) {
+        NotificationCenter.default.post(name: name, object: sender)
     }
 
-    open class func post(_ name: String, userInfo: [AnyHashable: Any]?) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: nil, userInfo: userInfo)
+    open class func post(_ name: Notification.Name, userInfo: [AnyHashable: Any]?) {
+        NotificationCenter.default.post(name: name, object: nil, userInfo: userInfo)
     }
 
-    open class func post(_ name: String, sender: AnyObject?, userInfo: [AnyHashable: Any]?) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: sender, userInfo: userInfo)
+    open class func post(_ name: Notification.Name, sender: AnyObject?, userInfo: [AnyHashable: Any]?) {
+        NotificationCenter.default.post(name: name, object: sender, userInfo: userInfo)
     }
 
 }

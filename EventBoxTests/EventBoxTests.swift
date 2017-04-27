@@ -23,10 +23,11 @@ class EventBoxTests: XCTestCase {
     }
     
     func testOnMainThread() {
-        _ = EventBox.onMainThread(self, name: "onMainThread") { _ in
+        let name = Notification.Name.init(rawValue: "onMainThread")
+        EventBox.onMainThread(self, name: name) { _ in
             XCTAssertTrue(Thread.isMainThread)
         }
-        EventBox.post("onMainThread")
+        EventBox.post(name)
     }
     
     func testOnMainThreadWithSender() {
@@ -34,19 +35,20 @@ class EventBoxTests: XCTestCase {
         let senderB = 2 as AnyObject
         var sendersA: [AnyObject] = []
         var sendersAll: [Any?] = []
+        let name = Notification.Name.init(rawValue: "onMainThreadWithSender")
         
-        _ = EventBox.onMainThread(self, name: "onMainThreadWithSender", sender: senderA) { (notification: Notification!) in
+        EventBox.onMainThread(self, name: name, sender: senderA) { (notification: Notification!) in
             sendersA.append(notification.object as AnyObject)
             return
         }
         
-        _ = EventBox.onMainThread(self, name: "onMainThreadWithSender") { (notification: Notification!) in
+        EventBox.onMainThread(self, name: name) { (notification: Notification!) in
             sendersAll.append(notification.object)
             return
         }
-        EventBox.post("onMainThreadWithSender", sender: senderA)
-        EventBox.post("onMainThreadWithSender", sender: senderB)
-        EventBox.post("onMainThreadWithSender")
+        EventBox.post(name, sender: senderA)
+        EventBox.post(name, sender: senderB)
+        EventBox.post(name)
         
         XCTAssertEqual(sendersA.count, 1)
 
@@ -55,30 +57,32 @@ class EventBoxTests: XCTestCase {
     }
     
     func testOnBackgroundThread() {
-        _ = EventBox.onBackgroundThread(self, name: "onBackgroundThread") { _ in
+        let name = Notification.Name.init(rawValue: "onMainThread")
+        EventBox.onBackgroundThread(self, name: name) { _ in
             XCTAssertTrue(Thread.isMainThread == false)
         }
-        EventBox.post("onBackgroundThread")
+        EventBox.post(name)
     }
     
     func testOnBackgroundThreadWithSender() {
+        let name = Notification.Name.init(rawValue: "onBackgroundThreadWithSender")
         let senderA = 1 as AnyObject
         let senderB = 2 as AnyObject
         var sendersA: [Int] = []
         var sendersAll: [Any?] = []
         
-        _ = EventBox.onMainThread(self, name: "onBackgroundThreadWithSender", sender: senderA) { (notification: Notification!) in
+        EventBox.onMainThread(self, name: name, sender: senderA) { (notification: Notification!) in
             sendersA.append(notification.object as! Int)
             return
         }
         
-        _ = EventBox.onMainThread(self, name: "onBackgroundThreadWithSender") { (notification: Notification!) in
+        EventBox.onMainThread(self, name: name) { (notification: Notification!) in
             sendersAll.append(notification.object)
             return
         }
-        EventBox.post("onBackgroundThreadWithSender", sender: senderA)
-        EventBox.post("onBackgroundThreadWithSender", sender: senderB)
-        EventBox.post("onBackgroundThreadWithSender")
+        EventBox.post(name, sender: senderA)
+        EventBox.post(name, sender: senderB)
+        EventBox.post(name)
         
         XCTAssertEqual(sendersA.count, 1)
 
@@ -87,7 +91,8 @@ class EventBoxTests: XCTestCase {
     }
     
     func testOff() {
-        
+        let name = Notification.Name.init(rawValue: "counter")
+
         var count = 0
         
         let handler = { (n: Notification!) -> Void in
@@ -95,26 +100,29 @@ class EventBoxTests: XCTestCase {
             return
         }
         
-        _ = EventBox.onMainThread(self, name: "counter", handler: handler)
+        EventBox.onMainThread(self, name: name, handler: handler)
         
-        EventBox.post("counter")
-        EventBox.post("counter")
-        
+        EventBox.post(name)
+        EventBox.post(name)
+
         EventBox.off(self)
         
-        EventBox.post("counter")
-        EventBox.post("counter")
+        EventBox.post(name)
+        EventBox.post(name)
+
+        EventBox.onMainThread(self, name: name, handler: handler)
         
-        _ = EventBox.onMainThread(self, name: "counter", handler: handler)
-        
-        EventBox.post("counter")
-        EventBox.post("counter")
-        
+        EventBox.post(name)
+        EventBox.post(name)
+
         XCTAssertEqual(count, 4)
     }
     
     func testOffWithName() {
-        
+        let name1 = Notification.Name.init(rawValue: "counter1")
+        let name2 = Notification.Name.init(rawValue: "counter2")
+        let name3 = Notification.Name.init(rawValue: "counter3")
+
         var count = 0
         
         let handler = { (n: Notification!) -> Void in
@@ -122,24 +130,24 @@ class EventBoxTests: XCTestCase {
             return
         }
         
-        _ = EventBox.onMainThread(self, name: "counter1", handler: handler)
-        _ = EventBox.onMainThread(self, name: "counter2", handler: handler)
-        _ = EventBox.onMainThread(self, name: "counter3", handler: handler)
+        EventBox.onMainThread(self, name: name1, handler: handler)
+        EventBox.onMainThread(self, name: name2, handler: handler)
+        EventBox.onMainThread(self, name: name3, handler: handler)
         
-        EventBox.post("counter1")
-        EventBox.post("counter2")
-        EventBox.post("counter3")
+        EventBox.post(name1)
+        EventBox.post(name2)
+        EventBox.post(name3)
         
         XCTAssertEqual(count, 3)
         
         count = 0
         
-        EventBox.off(self, name: "counter1")
-        EventBox.off(self, name: "counter2")
+        EventBox.off(self, name: name1)
+        EventBox.off(self, name: name2)
         
-        EventBox.post("counter1")
-        EventBox.post("counter2")
-        EventBox.post("counter3")
+        EventBox.post(name1)
+        EventBox.post(name2)
+        EventBox.post(name3)
         
         XCTAssertEqual(count, 1)
     }
